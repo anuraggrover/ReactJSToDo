@@ -6,7 +6,9 @@
   "scripts": {
     "build:js": "./node_modules/webpack/bin/webpack.js",
     "build:css": "./node_modules/node-sass/bin/node-sass sass/main.scss > dist/main.css",
+    "build": "npm run build:js && npm run build:css",
     "watch:js": "./node_modules/watch/cli.js 'npm run build:js' src",
+    "dev": "npm run watch:js && npm run watch:sass",
     "watch:sass": "./node_modules/watch/cli.js 'npm run build:css' sass"
   },
   "author": "",
