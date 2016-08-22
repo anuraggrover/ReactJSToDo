@@ -25,8 +25,8 @@ export default class ToDoItemView extends React.Component {
       <div className={'todo-item ' + (this.props.isDone ? 'done' : '')}>
         <span className="todo-text">{this.props.toDoItem}</span>
         <span className="todo-remove action" onClick={this.delete}>&times;</span>
-        <span className={'todo-done action ' + (this.props.isDone ? 'hide' : '')} onClick={this.toggleDone}>&#10004;</span>
-        <span className={'todo-done action ' + (this.props.isDone ? '' : 'hide')} onClick={this.toggleDone}>&#8224;</span>
+        <span className={'todo-done todo-mark-done action ' + (this.props.isDone ? 'hide' : '')} onClick={this.toggleDone}>&#10004;</span>
+        <span className={'todo-done todo-mark-undone action ' + (this.props.isDone ? '' : 'hide')} onClick={this.toggleDone}>&#8224;</span>
         </div>
     )
   }

@@ -40,7 +40,7 @@ export default class ToDoInput extends React.Component {
     return (
       <div className="todo-input">
         <input type="text" ref="toDoInput" value={this.state.toDoText} onChange={this.updateState} onKeyUp={this.onKeyUp}/>
-        <button onClick={this.addToDo}>Add</button>
+        <button className="add-todo-btn" onClick={this.addToDo}>Add</button>
       </div>
     )
   }

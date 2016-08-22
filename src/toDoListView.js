@@ -23,7 +23,15 @@ export default class ToDoListView extends React.Component {
   }
 
   getToDos() {
-    return JSON.parse(localStorage.getItem('toDoItems')) || [];
+    let toDoItems;
+
+    try {
+      toDoItems = JSON.parse(localStorage.getItem('toDoItems'));
+    } catch(e) {
+      toDoItems = [];
+    }
+
+    return toDoItems;
   }
 
   addToDo(toDoItemText) {
