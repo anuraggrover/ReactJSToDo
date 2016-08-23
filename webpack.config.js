@@ -3,7 +3,7 @@
  */
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/toDoApp.js',
   output: { path: __dirname + '/dist', filename: 'bundle.js' },
   module: {
     loaders: [

@@ -4,7 +4,7 @@
 
 import React from 'react';
 import ToDoItemView from './toDoItemView';
-import ToDoInput from './todoInput';
+import ToDoInput from './toDoInput';
 
 export default class ToDoListView extends React.Component {
   constructor(props) {

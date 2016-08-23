@@ -10,7 +10,7 @@
     "watch:js": "./node_modules/watch/cli.js 'npm run build:js' src",
     "dev": "npm run watch:js && npm run watch:sass",
     "watch:sass": "./node_modules/watch/cli.js 'npm run build:css' sass",
-    "test": "jest"
+    "test": "jest --no-cache"
   },
   "author": "",
   "license": "ISC",
