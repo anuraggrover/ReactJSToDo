@@ -35,6 +35,8 @@
       "<rootDir>/node_modules/react/",
       "<rootDir>/node_modules/react-dom/",
       "<rootDir>/node_modules/react-addons-test-utils/"
-    ]
+    ],
+    "collectCoverage": true,
+    "verbose": true
   }
 }
