@@ -6,78 +6,72 @@ import React from 'react';
 import ToDoItemView from './toDoItemView';
 import ToDoInput from './toDoInput';
 
+import configureStore from './configureStore';
+import toDoReducer from './reducers/todoReducer';
+
 export default class ToDoListView extends React.Component {
   constructor(props) {
     super(props);
+    
+    let store = this.store = configureStore(toDoReducer, this._getToDos());
+
     this.state = {
-      toDoItems: this.getToDos()
+      toDoItems: store.getState().toDoItems
     };
 
     this.addToDo = this.addToDo.bind(this);
     this.toggleToDoDone = this.toggleToDoDone.bind(this);
     this.deleteToDo = this.deleteToDo.bind(this);
-
-    const toDoId = localStorage.getItem('toDoId');
-    this.toDoId = toDoId ? parseInt(toDoId, 10) : 0;
-    localStorage.setItem('toDoId', this.toDoId);
   }
 
-  getToDos() {
+  _getToDos() {
     let toDoItems;
 
     try {
-      toDoItems = JSON.parse(localStorage.getItem('toDoItems'));
+      toDoItems = JSON.parse(localStorage.getItem('toDoItems') || []);
     } catch(e) {
       toDoItems = [];
     }
 
-    return toDoItems;
+    let toDoId = localStorage.getItem('toDoId');
+    toDoId = toDoId ? parseInt(toDoId, 10) : 0;
+
+    return {
+      toDoId, toDoItems
+    };
+  }
+
+  _updateToDos() {
+    this.setState({
+      toDoItems: this.store.getState().toDoItems
+    });
   }
 
   addToDo(toDoItemText) {
-    const toDoItems = this.getToDos();
-
-    toDoItems.push({
-      id: 'item-' + ++this.toDoId,
-      text: toDoItemText,
-      done: false
+    this.store.dispatch({
+      type: 'ADD_TODO',
+      value: toDoItemText
     });
-
-    localStorage.setItem('toDoId', this.toDoId);
-
-    localStorage.setItem('toDoItems', JSON.stringify(toDoItems));
-
-    this.setState({
-      toDoItems: toDoItems
-    });
+    
+    this._updateToDos();
   }
 
   deleteToDo(itemId) {
-    const toDoItems = this.getToDos();
-    const toDoItemIndex = toDoItems.findIndex((item) => {return item.id === itemId});
-
-    if (toDoItemIndex !== -1) {
-      toDoItems.splice(toDoItemIndex, 1);
-    }
-
-    this.setState({
-      toDoItems: toDoItems
+    this.store.dispatch({
+      type: 'DELETE_TODO',
+      value: itemId
     });
 
-    localStorage.setItem('toDoItems', JSON.stringify(toDoItems));
+    this._updateToDos();
   }
 
   toggleToDoDone(itemId) {
-    const toDoItems = this.getToDos();
-    const toDoItem = toDoItems.find((item) => {return item.id === itemId});
-
-    toDoItem.done = !toDoItem.done;
-
-    this.setState({
-      toDoItems: toDoItems
+    this.store.dispatch({
+      type: 'TOGGLE_TODO_DONE',
+      value: itemId
     });
 
-    localStorage.setItem('toDoItems', JSON.stringify(toDoItems));
+    this._updateToDos();
   }
 
   render() {
